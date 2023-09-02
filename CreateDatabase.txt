@@ -1,0 +1,65 @@
+>>> Create Accounts Table:
+CREATE TABLE `accounts` (
+	`id` TINYINT(5) NOT NULL AUTO_INCREMENT,
+	`userId` TINYINT(5) NOT NULL,
+	`accountName` VARCHAR(255) NOT NULL,
+	`amount` FLOAT NULL DEFAULT '0',
+	`comment` TEXT NULL DEFAULT NULL,
+	`createdAt` DATETIME NOT NULL DEFAULT current_timestamp(),
+	`updatedAt` DATETIME NULL DEFAULT NULL,
+	`deletedAt` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+);
+
+>>> Create Categories Table:
+CREATE TABLE `categories` (
+	`id` TINYINT(5) NOT NULL AUTO_INCREMENT,
+	`userId` TINYINT(5) NOT NULL,
+	`transactionType` TINYINT(5) NOT NULL,
+	`name` TINYINT(5) NOT NULL,
+	`createdAt` DATETIME NOT NULL DEFAULT current_timestamp(),
+	`deletedAt` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+);
+
+>>> Create transactions Table:
+CREATE TABLE `transactions` (
+	`id` TINYINT(5) NOT NULL AUTO_INCREMENT,
+	`amount` FLOAT NOT NULL,
+	`comment` TEXT NULL DEFAULT NULL,
+	`type` TINYINT(5) NOT NULL COMMENT '1=Income,2=Expense,3=transfer',
+	`userId` TINYINT(5) NOT NULL,
+	`accountId` TINYINT(5) NOT NULL,
+	`isReversible` TINYINT(1) NULL DEFAULT '1',
+	`categoryId` TINYINT(5) NULL DEFAULT,
+	`createdAt` DATETIME NOT NULL DEFAULT current_timestamp(),
+	`updatedAt` DATETIME NULL DEFAULT NULL,
+	`deletedAt` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+);
+
+>>> Create users table:
+CREATE TABLE `users` (
+	`id` TINYINT(5) NOT NULL AUTO_INCREMENT,
+	`userName` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`password` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`email` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`phone` VARCHAR(20) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`createdAt` DATETIME NOT NULL DEFAULT current_timestamp(),
+	`updatedAt` DATETIME NULL DEFAULT NULL,
+	`deletedAt` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `userName` (`userName`) USING BTREE,
+	UNIQUE INDEX `email` (`email`) USING BTREE,
+	UNIQUE INDEX `phone` (`phone`) USING BTREE
+);
+
+>>> Create user_entities table:
+CREATE TABLE `user_entities` (
+	`id` TINYINT(5) NOT NULL AUTO_INCREMENT,
+	`userd` TINYINT(5) NOT NULL,
+	`name` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`createdAt` DATETIME NOT NULL DEFAULT current_timestamp(),
+	`deletedAt` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+);
